@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diabetes Prediction</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        .container {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+            max-width: 650px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #237a45;
+            font-size: 27px;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cfded2;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+            background-color: #fafdfb;
+        }
+
+        input[type="text"]:focus {
+            border-color: #299653;
+            box-shadow: 0 0 5px rgba(41, 150, 83, 0.2);
+            background-color: white;
+        }
+
+        input[type="submit"] {
+            grid-column: span 2;
+            width: 100%;
+            padding: 13px;
+            background: #299653;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #1e713d;
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .prediction {
+            color: #237a45;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 12px;
+            background: #e8f5e9;
+            border-radius: 7px;
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            input[type="submit"] {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Diabetes Prediction</h2>
+
+        <form method="post" action="/predict">
+
+            <div class="form-group">
+                <label>Number of Pregnancies:</label>
+                <input type="text" name="num_preg"
+                    placeholder="e.g., 2"
+                    value="{{ form_data.num_preg if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Glucose Concentration:</label>
+                <input type="text" name="glucose_conc"
+                    placeholder="e.g., 120"
+                    value="{{ form_data.glucose_conc if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Diastolic Blood Pressure:</label>
+                <input type="text" name="diastolic_bp"
+                    placeholder="e.g., 70"
+                    value="{{ form_data.diastolic_bp if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Insulin:</label>
+                <input type="text" name="insulin"
+                    placeholder="e.g., 94"
+                    value="{{ form_data.insulin if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>BMI:</label>
+                <input type="text" name="bmi"
+                    placeholder="e.g., 30.5"
+                    value="{{ form_data.bmi if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Diabetes Pedigree Function:</label>
+                <input type="text" name="diab_pred"
+                    placeholder="e.g., 0.372"
+                    value="{{ form_data.diab_pred if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="text" name="age"
+                    placeholder="e.g., 33"
+                    value="{{ form_data.age if form_data else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Skin Thickness:</label>
+                <input type="text" name="skin"
+                    placeholder="e.g., 20"
+                    value="{{ form_data.skin if form_data else '' }}">
+            </div>
+
+            <input type="submit" value="Predict">
+
+        </form>
+
+        {% if prediction_text %}
+            <h3 class="prediction">{{ prediction_text }}</h3>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
